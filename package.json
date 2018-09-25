@@ -1,0 +1,23 @@
+{
+  "name": "senac-bcc-pi6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "random-js": "^1.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leoGajardo/senac-BCC-PI6.git"
+  },
+  "author": "Leo Gajardo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leoGajardo/senac-BCC-PI6/issues"
+  },
+  "homepage": "https://github.com/leoGajardo/senac-BCC-PI6#readme"
+}
