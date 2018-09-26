@@ -4,29 +4,52 @@ const Random = require("random-js");
 
 function main(){
 
-    let random = new Random(Random.engines.mt19937().autoSeed());
-    let value = random.integer(0, 15);
-
     console.log('simulação iniciando');
     //gerar fila
 
-    let fila = [];
-    let tarefaCliente = getActType(1);
+    var stats = [];
 
-    for (let i = 0; i < value; i++) {
-        fila.push(createClient());
+    for (let i = 0; i < 6; i++) {
+        stats.push(getActType(i+1));
+        stats[i].duration = 0;        
     }
-    console.log(value + ' clientes gerados aleatoriamente');
 
-    fila.push({ act : tarefaCliente });
+    for (let i = 0; i < 10; i++) {
 
-    var total = fila
-        .map(el => el.act.duration)
-        .reduce(function(acc, val, i, ar){
-            return acc + val;
+        let random = new Random(Random.engines.mt19937().autoSeed());
+        let value = random.integer(0, 15);
+
+        let fila = [];
+        let tarefaCliente = getActType(1);
+
+        for (let i = 0; i < value; i++) {
+            fila.push(createClient());
+        }
+        console.log(value + ' clientes gerados aleatoriamente');
+
+        fila.push({ act : tarefaCliente });
+
+        var total = fila
+            .map(el => el.act.duration)
+            .reduce(function(acc, val, i, ar){
+                return acc + val;
+            });
+        
+        console.log('total de tempo para pagar uma conta: ' + total + ' minutos');
+        
+        stats.forEach(el => {
+            el.duration += fila.filter(c => c.act.type == el.type)
+                .map(c => c.act.duration)
+                .reduce((acc, val, i, ar) => acc + val, 0);
         });
+        
+    }
+
+    console.log('tempo gasto em cada tipo de tarefa:');
     
-    console.log('total de tempo para pagar uma conta: ' + total + ' minutos');
+    stats.forEach(el => {
+        console.log('foi gasto ' + el.duration + ' minutos em ' + el.name);
+    });
 }
 
 function createClient(){
